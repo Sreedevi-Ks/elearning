@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<h2>Pending Teacher Approvals</h2>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Action</th>
+</tr>
+
+{% for teacher in teachers %}
+
+<tr>
+
+<td>{{ teacher.user.username }}</td>
+
+<td>{{ teacher.user.email }}</td>
+
+<td>
+
+<a href="{% url 'approve_teacher' teacher.id %}"
+class="btn btn-success">
+
+Approve
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="3">
+
+No Pending Teachers
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

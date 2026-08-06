@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Students
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>My Students</h2>
+
+    <hr>
+
+    {% if students %}
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Course</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for enrollment in students %}
+
+            <tr>
+
+                <td>{{ enrollment.student.user.username }}</td>
+
+                <td>{{ enrollment.student.user.email }}</td>
+
+                <td>{{ enrollment.course.title }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+
+        No students enrolled yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

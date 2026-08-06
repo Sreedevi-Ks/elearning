@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Quiz History
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+
+        My Quiz History
+
+    </h2>
+
+    {% if results %}
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>Lesson</th>
+
+                <th>Question</th>
+
+                <th>Your Answer</th>
+
+                <th>Correct Answer</th>
+
+                <th>Result</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for result in results %}
+
+            <tr>
+
+                <td>
+
+                    {{ result.quiz.lesson.title }}
+
+                </td>
+
+                <td>
+
+                    {{ result.quiz.question }}
+
+                </td>
+
+                <td>
+
+                    {{ result.selected_answer }}
+
+                </td>
+
+                <td>
+
+                    {{ result.quiz.correct_answer }}
+
+                </td>
+
+                <td>
+
+                    {% if result.is_correct %}
+
+                    <span class="badge bg-success">
+
+                        Correct
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-danger">
+
+                        Wrong
+
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+
+        You haven't attempted any quizzes yet.
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

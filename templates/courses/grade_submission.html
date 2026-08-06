@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Grade Assignment
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2>Grade Assignment</h2>
+
+        <h4 class="text-muted">
+
+            {{ submission.student.username }}
+
+        </h4>
+
+        <a
+            href="{{ submission.submission_file.url }}"
+            target="_blank"
+            class="btn btn-primary mb-4">
+
+            Download Submission
+
+        </a>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Marks
+
+                </label>
+
+                <input
+                    type="number"
+                    name="marks"
+                    class="form-control"
+                    value="{{ submission.marks }}">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+
+                    Feedback
+
+                </label>
+
+                <textarea
+                    name="feedback"
+                    class="form-control"
+                    rows="5">{{ submission.feedback }}</textarea>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-success">
+
+                Save Grade
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

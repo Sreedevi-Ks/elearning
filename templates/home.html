@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="hero">
+
+    <div class="container">
+
+        <h1>
+            Welcome to LearnHub LMS
+        </h1>
+
+        <p>
+            Learn Anytime, Anywhere with Expert Teachers
+        </p>
+        <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">
+            Login
+        </a>
+
+    </div>
+
+</div>
+
+<!-- Feature Cards -->
+<div class="container mt-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card p-4 text-center h-100">
+
+                <h3>📚</h3>
+
+                <h4>Course Management</h4>
+
+                <p>
+                    Browse and enroll in professional courses.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card p-4 text-center h-100">
+
+                <h3>👨‍🏫</h3>
+
+                <h4>Expert Teachers</h4>
+
+                <p>
+                    Learn from experienced instructors.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card p-4 text-center h-100">
+
+                <h3>🎓</h3>
+
+                <h4>Certificates</h4>
+
+                <p>
+                    Earn certificates after completion.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

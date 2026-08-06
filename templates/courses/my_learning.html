@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Learning
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        My Learning
+    </h2>
+
+    <div class="row">
+
+        {% for enrollment in enrollments %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                {% if enrollment.course.course_image %}
+
+                <img
+                    src="{{ enrollment.course.course_image.url }}"
+                    class="card-img-top"
+                    height="220">
+
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h5>
+                        {{ enrollment.course.title }}
+                    </h5>
+
+                    <p>
+                        <strong>Teacher:</strong>
+                        {{ enrollment.course.teacher.user.username }}
+                    </p>
+
+                    <p>
+                        <strong>Level:</strong>
+                        {{ enrollment.course.level }}
+                    </p>
+
+                    <a
+                        href="{% url 'course_detail' enrollment.course.id %}"
+                        class="btn btn-primary w-100">
+
+                        View Course
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <h4 class="text-center">
+            You haven't enrolled in any courses yet.
+        </h4>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Courses
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        Available Courses
+    </h2>
+
+    <div class="row">
+
+        {% for course in courses %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100">
+
+                {% if course.course_image %}
+                    <img src="{{ course.course_image.url }}"
+                         class="card-img-top"
+                         height="220">
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h5>{{ course.title }}</h5>
+
+                    <p>
+                        {{ course.category }}
+                    </p>
+
+                    <p>
+                        {{ course.level }}
+                    </p>
+
+                    <h5 class="text-success">
+                        ₹{{ course.course_fee }}
+                    </h5>
+
+                    <a
+                        href="{% url 'course_detail' course.id %}"
+                        class="btn btn-primary w-100">
+
+                        View Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <h4 class="text-center">
+            No Courses Available
+        </h4>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

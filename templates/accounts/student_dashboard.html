@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Student Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        👋 Welcome, {{ request.user.username }}
+    </h2>
+
+    <h4 class="text-muted mb-4">
+        Student Dashboard
+    </h4>
+    <div class="row mt-4">
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Total Courses</h5>
+
+                <h2>{{ total_courses }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Completed Lessons</h5>
+
+                <h2>{{ completed_lessons }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Total Lessons</h5>
+
+                <h2>{{ total_lessons }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Overall Progress</h5>
+
+                <h2>{{ overall_progress }}%</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr>
+
+<h4>Learning Progress</h4>
+
+<div class="progress mb-4" style="height:30px;">
+
+    <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        style="width: {{ overall_progress }}%;">
+
+        {{ overall_progress }}%
+
+    </div>
+
+</div>
+<hr>
+
+<h4 class="mb-4">
+
+    Quiz Performance
+
+</h4>
+
+<div class="row">
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Attempts</h5>
+
+                <h2>{{ total_quizzes }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Correct</h5>
+
+                <h2>{{ correct_answers }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Wrong</h5>
+
+                <h2>{{ wrong_answers }}</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card text-center shadow">
+
+            <div class="card-body">
+
+                <h5>Accuracy</h5>
+
+                <h2>{{ quiz_accuracy }}%</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    <h4 class="mt-5 mb-3">
+        Quick Actions
+    </h4>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'course_list' %}" class="btn btn-primary w-100">
+                Browse Courses
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'my_enrolled_courses' %}" class="btn btn-success w-100">
+                My Courses
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <a href="{% url 'profile' %}" class="btn btn-info w-100">
+                My Profile
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Attendance
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>
+
+        Attendance
+
+    </h2>
+
+    <h4 class="text-muted">
+
+        {{ live_class.title }}
+
+    </h4>
+
+    <table class="table table-bordered mt-4">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>#</th>
+
+                <th>Student</th>
+
+                <th>Email</th>
+
+                <th>Joined At</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for record in attendance %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ record.student.username }}</td>
+
+                <td>{{ record.student.email }}</td>
+
+                <td>{{ record.joined_at }}</td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="4" class="text-center">
+
+                    No students have attended this class yet.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

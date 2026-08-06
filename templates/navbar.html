@@ -1,0 +1,157 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+    <div class="container">
+
+        <!-- Logo -->
+        <a class="navbar-brand fw-bold" href="/">
+            🎓 LearnHub
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarMenu"
+                aria-controls="navbarMenu"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+
+            <!-- LEFT MENU -->
+            <ul class="navbar-nav me-auto">
+
+                <!-- Guest -->
+                {% if not request.user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_list' %}">Courses</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+
+                {% endif %}
+
+                <!-- Student -->
+                {% if request.user.is_authenticated and request.user.profile.role == "student" %}
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'student_dashboard' %}">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_learning' %}">
+                            My Learning
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_enrolled_courses' %}">
+                            My Courses
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'certificate_center' %}">
+                            My Certificates
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'quiz_history' %}">
+                            Quiz History
+                        </a>
+                    </li>
+
+                {% endif %}
+
+                <!-- Teacher -->
+                {% if request.user.is_authenticated and request.user.profile.role == "teacher" %}
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'teacher_dashboard' %}">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_list' %}">
+                            Courses
+                        </a>
+                    </li>
+
+                {% endif %}
+
+                <!-- Admin -->
+                {% if request.user.is_authenticated and request.user.is_superuser %}
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_list' %}">
+                            Courses
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+            <!-- RIGHT MENU -->
+            <ul class="navbar-nav">
+
+                {% if request.user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">
+                            My Profile
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-danger ms-lg-2" href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-light ms-lg-2" href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>

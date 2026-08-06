@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Lesson
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+
+        Edit Lesson
+
+    </h2>
+
+    <h5 class="mb-3">
+
+        Course:
+        {{ course.title }}
+
+    </h5>
+
+    <form method="POST"   enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button
+            type="submit"
+            class="btn btn-success">
+
+            Save Lesson
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

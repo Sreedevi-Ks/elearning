@@ -1,0 +1,500 @@
+{% extends 'base.html' %}
+{% load course_extras %}
+{% block title %}
+{{ course.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <!-- Course Image -->
+        <div class="col-md-5">
+
+            {% if course.course_image %}
+
+            <img
+                src="{{ course.course_image.url }}"
+                class="img-fluid rounded shadow">
+
+            {% else %}
+
+            <img
+                src="https://via.placeholder.com/500x300?text=Course+Image"
+                class="img-fluid rounded shadow">
+
+            {% endif %}
+
+        </div>
+
+        <!-- Course Details -->
+        <div class="col-md-7">
+
+            <h2>{{ course.title }}</h2>
+
+            <hr>
+
+            <p>
+                <strong>Category:</strong>
+                {{ course.category }}
+            </p>
+
+            <p>
+                <strong>Level:</strong>
+                {{ course.level }}
+            </p>
+
+            <p>
+                <strong>Duration:</strong>
+                {{ course.duration }}
+            </p>
+
+            <p>
+                <strong>Language:</strong>
+                {{ course.language }}
+            </p>
+
+            <p>
+                <strong>Teacher:</strong>
+                {{ course.teacher.user.username }}
+            </p>
+
+            <p>
+                <strong>Maximum Students:</strong>
+                {{ course.maximum_students }}
+            </p>
+
+            <h3 class="text-success">
+
+                ₹{{ course.course_fee }}
+
+            </h3>
+
+            <hr>
+
+            <h4>Description</h4>
+
+            <p>
+
+                {{ course.description }}
+
+            </p>
+            {% if request.user.profile.role == "student" %}
+
+<hr>
+
+<h4>Course Progress</h4>
+
+<div class="progress mb-3" style="height:30px;">
+
+    <div
+        class="progress-bar progress-bar-striped progress-bar-animated"
+        role="progressbar"
+        style="width: {{ progress_percentage }}%;">
+
+        {{ progress_percentage }}%
+
+    </div>
+
+</div>
+
+<p>
+
+    <strong>{{ completed_lessons }}</strong> of
+    <strong>{{ total_lessons }}</strong> lessons completed.
+
+</p>
+{% if progress_percentage == 100 %}
+
+<a
+    href="{% url 'download_certificate' course.id %}"
+    class="btn btn-success">
+
+    🎓 Download Certificate
+
+</a>
+
+{% endif %}
+
+{% endif %}
+            
+
+            {% if request.user.profile.role == "student" %}
+
+    {% if enrolled %}
+
+        <button class="btn btn-success" disabled>
+            ✓ Enrolled
+        </button>
+
+    {% else %}
+
+        <a href="{% url 'course_payment' course.id %}"
+           class="btn btn-primary">
+
+            Buy Now
+
+        </a>
+
+    {% endif %}
+
+{% endif %}
+
+            {% if request.user == course.teacher.user %}
+            <a href="{% url 'add_lesson' course.id %}" class="btn btn-primary">
+            Add Lesson
+            </a>
+            <a href="{% url 'edit_course' course.id %}" class="btn btn-warning">
+            Edit Course
+            </a>
+            <a href="{% url 'delete_course' course.id %}" class="btn btn-danger">
+            Delete Course
+            </a>
+            <a href="{% url 'add_live_class' course.id %}" class="btn btn-info">
+            Schedule Live Class
+            </a>
+            <a href="{% url 'add_assignment' course.id %}" class="btn btn-dark">
+            Add Assignment
+            </a>
+
+{% endif %}
+
+        </div>
+
+    </div>
+
+    <hr class="my-5">
+
+    <h3>
+
+        Course Curriculum
+
+    </h3>
+
+    <div class="list-group mt-3">
+
+        {% for lesson in lessons %}
+
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h5>
+
+                    Lesson {{ lesson.lesson_order }}
+
+                </h5>
+
+                <p class="mb-0">
+
+                    {{ lesson.title }}
+
+                </p>
+
+            </div>
+
+            {% if request.user == course.teacher.user %}
+
+<a
+    href="{% url 'lesson_detail' lesson.id %}"
+    class="btn btn-primary">
+
+    Watch Lesson
+
+</a>
+
+{% elif request.user.profile.role == "student" %}
+
+    {% if enrolled %}
+
+    <a
+        href="{% url 'lesson_detail' lesson.id %}"
+        class="btn btn-primary">
+
+        Watch Lesson
+
+    </a>
+
+    {% else %}
+
+    <button
+        class="btn btn-secondary"
+        disabled>
+
+        Purchase Course
+
+    </button>
+
+    {% endif %}
+
+{% endif %}
+            {% if request.user == course.teacher.user %}
+
+            <a href="{% url 'edit_lesson' lesson.id %}" class="btn btn-warning">
+            Edit
+            </a>
+            <a href="{% url 'delete_lesson' lesson.id %}" class="btn btn-danger">
+            Delete
+            </a>
+            {% endif %}
+
+        </div>
+
+        {% empty %}
+
+        <div class="list-group-item text-muted">
+
+            No lessons added yet.
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    </div>
+
+</div>
+
+<hr class="my-5">
+
+<h3>Live Classes</h3>
+
+{% if live_classes %}
+
+    {% for live in live_classes %}
+
+    <div class="card shadow mb-3">
+
+        <div class="card-body">
+
+            <h5>{{ live.title }}</h5>
+
+            <p><strong>Date:</strong> {{ live.scheduled_date }}</p>
+
+            <p><strong>Time:</strong> {{ live.scheduled_time }}</p>
+
+            <p><strong>Duration:</strong> {{ live.duration }} Minutes</p>
+            {% if request.user == course.teacher.user %}
+
+<a
+    href="{% url 'join_live_class' live.id %}"
+    target="_blank"
+    class="btn btn-success">
+
+    Join Live Class
+
+</a>
+
+{% elif request.user.profile.role == "student" %}
+
+    {% if enrolled %}
+
+    <a
+        href="{% url 'join_live_class' live.id %}"
+        target="_blank"
+        class="btn btn-success">
+
+        Join Live Class
+
+    </a>
+
+    {% else %}
+
+    <button
+        class="btn btn-secondary"
+        disabled>
+
+        Purchase Course
+
+    </button>
+
+    {% endif %}
+
+{% endif %}
+            {% if request.user == course.teacher.user %}
+            <a
+                href="{% url 'edit_live_class' live.id %}"
+                class="btn btn-warning">
+                Edit
+            </a>
+
+<a
+    href="{% url 'delete_live_class' live.id %}"
+    class="btn btn-danger">
+
+    Delete
+
+</a>
+<a
+    href="{% url 'view_attendance' live.id %}"
+    class="btn btn-secondary">
+
+    View Attendance
+
+</a>
+
+{% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+<div class="alert alert-info">
+
+    No Live Classes Scheduled.
+
+</div>
+
+{% endif %}
+<hr class="my-5">
+
+<h3>Assignments</h3>
+
+{% if assignments %}
+
+    {% for assignment in assignments %}
+
+    <div class="card shadow mb-3">
+
+        <div class="card-body">
+
+            <h5>{{ assignment.title }}</h5>
+
+            <p>{{ assignment.description }}</p>
+
+            <p>
+                <strong>Due Date:</strong>
+                {{ assignment.due_date }}
+            </p>
+
+            <p>
+                <strong>Maximum Marks:</strong>
+                {{ assignment.maximum_marks }}
+            </p>
+
+            {% if assignment.attachment %}
+
+            <a
+                href="{{ assignment.attachment.url }}"
+                target="_blank"
+                class="btn btn-primary">
+
+                Download Assignment
+
+            </a>
+
+            {% endif %}
+            {% if request.user == course.teacher.user %}
+            <a
+            href="{% url 'view_submissions' assignment.id %}"
+            class="btn btn-warning">
+            View Submissions
+            </a>
+            {% endif %}
+            {% if request.user.profile.role == "student" %}
+            {% if request.user.profile.role == "student" %}
+
+    {% if enrolled %}
+
+    <a
+        href="{% url 'submit_assignment' assignment.id %}"
+        class="btn btn-success">
+
+        Submit Assignment
+
+    </a>
+
+    {% else %}
+
+    <button
+        class="btn btn-secondary"
+        disabled>
+
+        Purchase Course
+
+    </button>
+
+    {% endif %}
+
+{% endif %}
+{% endif %}
+{% if request.user.profile.role == "student" %}
+
+    {% with submission=student_submissions|get_item:assignment.id %}
+
+        {% if submission %}
+
+            <hr>
+
+            <p>
+
+                <strong>Submitted On:</strong>
+
+                {{ submission.submitted_at }}
+
+            </p>
+
+            {% if submission.marks %}
+
+                <p class="text-success">
+
+                    <strong>Marks:</strong>
+
+                    {{ submission.marks }} / {{ assignment.maximum_marks }}
+
+                </p>
+
+            {% else %}
+
+                <p class="text-warning">
+
+                    <strong>Marks:</strong>
+
+                    Not Yet Graded
+
+                </p>
+
+            {% endif %}
+
+            {% if submission.feedback %}
+
+                <p>
+
+                    <strong>Teacher Feedback:</strong>
+
+                    {{ submission.feedback }}
+
+                </p>
+
+            {% endif %}
+
+        {% endif %}
+
+    {% endwith %}
+
+{% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+<div class="alert alert-info">
+
+    No assignments available.
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Live Class
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h3>Delete Live Class</h3>
+
+        <p>
+
+            Are you sure you want to delete
+            <strong>{{ live_class.title }}</strong>?
+
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="btn btn-danger">
+
+                Delete
+
+            </button>
+
+            <a
+                href="{% url 'course_detail' live_class.course.id %}"
+                class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

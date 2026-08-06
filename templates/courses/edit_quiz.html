@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Quiz
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="mb-4">
+
+            Edit Quiz
+
+        </h2>
+
+        <h5 class="text-primary">
+
+            Lesson: {{ lesson.title }}
+
+        </h5>
+
+        <hr>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button
+                type="submit"
+                class="btn btn-success">
+
+                Save Quiz
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ lesson.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>{{ lesson.title }}</h2>
+
+    <hr>
+
+    {% if lesson.lesson_video %}
+
+    <video
+        width="100%"
+        controls>
+
+        <source
+            src="{{ lesson.lesson_video.url }}"
+            type="video/mp4">
+
+    </video>
+
+    {% endif %}
+
+    <div class="mt-4">
+
+        <h4>Description</h4>
+
+        <p>{{ lesson.description }}</p>
+
+    </div>
+
+    {% if lesson.lesson_pdf %}
+
+    <a
+        href="{{ lesson.lesson_pdf.url }}"
+        class="btn btn-success"
+        target="_blank">
+
+        Download PDF
+
+    </a>
+
+    {% endif %}
+
+    <!-- ADD THIS CODE HERE -->
+
+    <hr>
+
+    {% if request.user.profile.role == "student" %}
+
+        {% if progress %}
+
+            <button
+                class="btn btn-success"
+                disabled>
+
+                ✓ Completed
+
+            </button>
+
+        {% else %}
+
+            <a
+                href="{% url 'mark_complete' lesson.id %}"
+                class="btn btn-primary">
+
+                ✓ Mark as Completed
+
+            </a>
+
+        {% endif %}
+
+    {% endif %}
+
+    <!-- END OF NEW CODE -->
+     {% if quiz  %}
+
+<hr>
+
+<h3>Lesson Quiz</h3>
+{% if request.user == lesson.course.teacher.user %}
+
+<a
+    href="{% url 'edit_quiz' quiz.id %}"
+    class="btn btn-warning mb-3">
+
+    Edit Quiz
+
+</a>
+<a
+    href="{% url 'delete_quiz' quiz.id %}"
+    class="btn btn-danger mb-3">
+
+    Delete Quiz
+
+</a>
+
+{% endif %}
+
+<form method="POST" action="{% url 'submit_quiz' quiz.id %}">
+
+    {% csrf_token %}
+
+    <p><strong>{{ quiz.question }}</strong></p>
+
+    <div class="form-check">
+        <input type="radio" name="answer" value="{{ quiz.option1 }}" class="form-check-input" required>
+        <label class="form-check-label">{{ quiz.option1 }}</label>
+    </div>
+
+    <div class="form-check">
+        <input type="radio" name="answer" value="{{ quiz.option2 }}" class="form-check-input">
+        <label class="form-check-label">{{ quiz.option2 }}</label>
+    </div>
+
+    <div class="form-check">
+        <input type="radio" name="answer" value="{{ quiz.option3 }}" class="form-check-input">
+        <label class="form-check-label">{{ quiz.option3 }}</label>
+    </div>
+
+    <div class="form-check">
+        <input type="radio" name="answer" value="{{ quiz.option4 }}" class="form-check-input">
+        <label class="form-check-label">{{ quiz.option4 }}</label>
+    </div>
+
+    <br>
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        Submit Quiz
+
+    </button>
+
+</form>
+
+    {% endif %}
+    {% if request.user.profile.role == "student" and quiz_result %}
+
+    <div class="alert alert-info mt-3">
+
+    You have already attempted this quiz.
+
+    </div>
+
+{% endif %}
+
+    <hr class="my-4">
+
+    <div class="d-flex justify-content-between">
+        {% if request.user == lesson.course.teacher.user %}
+
+        <hr>
+
+            <a
+                href="{% url 'add_quiz' lesson.id %}"
+                class="btn btn-warning">
+
+            Add Quiz
+
+        </a>
+
+        {% endif %}
+
+        <div>
+
+            {% if previous_lesson %}
+
+            <a
+                href="{% url 'lesson_detail' previous_lesson.id %}"
+                class="btn btn-outline-primary">
+
+                ⬅ Previous Lesson
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+        <div>
+
+            {% if next_lesson %}
+
+            <a
+                href="{% url 'lesson_detail' next_lesson.id %}"
+                class="btn btn-primary">
+
+                Next Lesson ➡
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Certificate Center
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+
+        My Certificates
+
+    </h2>
+
+    <div class="row">
+
+        {% for certificate in certificates %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h5>
+
+                        {{ certificate.course.title }}
+
+                    </h5>
+
+                    <p>
+
+                        Issued on:
+                        {{ certificate.issue_date }}
+
+                    </p>
+
+                    <a
+                        href="{% url 'download_certificate' certificate.id %}"
+                        class="btn btn-success">
+
+                        Download Certificate
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info">
+
+                You don't have any certificates yet.
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

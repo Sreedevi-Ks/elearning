@@ -1,0 +1,93 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+
+    path(
+        'register/',
+        views.register,
+        name='register'
+    ),
+    path(
+        "login/",
+        views.user_login,
+        name="login"
+    ),
+    path(
+    "logout/",
+    views.user_logout,
+    name="logout"
+    ),
+    path(
+    "teacher-dashboard/",
+    views.teacher_dashboard,
+    name="teacher_dashboard"
+    ),
+
+    path(
+    "student-dashboard/",
+    views.student_dashboard,
+    name="student_dashboard"
+    ),
+    path(
+    "profile/",
+    views.profile,
+    name="profile"
+    ),
+    path(
+    "edit-profile/",
+    views.edit_profile,
+    name="edit_profile"
+    ),
+    path(
+    "change-password/",
+    views.change_password,
+    name="change_password"
+    ),
+    path(
+    "admin-dashboard/",
+    views.admin_dashboard,
+    name="admin_dashboard"
+    ),
+    path(
+    "manage-teachers/",
+    views.manage_teachers,
+    name="manage_teachers"
+    ),
+    path(
+    "toggle-teacher-status/<int:user_id>/",
+    views.toggle_teacher_status,
+    name="toggle_teacher_status"
+    ),
+    path(
+    "manage-students/",
+    views.manage_students,
+    name="manage_students"
+    ),
+    path(
+    "toggle-student-status/<int:user_id>/",
+    views.toggle_student_status,
+    name="toggle_student_status"
+    ),
+    path(
+    "manage-courses/",
+    views.manage_courses,
+    name="manage_courses"
+    ),
+    path(
+    "enrollment-report/",
+    views.enrollment_report,
+    name="enrollment_report"
+    ),
+    path(
+    "pending-teachers/",
+    views.pending_teachers,
+    name="pending_teachers"
+    ),
+    path(
+    "approve-teacher/<int:profile_id>/",
+    views.approve_teacher,
+    name="approve_teacher"
+    ),
+
+]

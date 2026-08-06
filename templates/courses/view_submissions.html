@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Assignment Submissions
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>{{ assignment.title }}</h2>
+
+    <table class="table table-bordered table-striped mt-4">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>#</th>
+                <th>Student</th>
+                <th>Email</th>
+                <th>Comments</th>
+                <th>Submitted At</th>
+                <th>File</th>
+                <th>Grade</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for submission in submissions %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ submission.student.username }}</td>
+
+                <td>{{ submission.student.email }}</td>
+
+                <td>{{ submission.comments }}</td>
+
+                <td>{{ submission.submitted_at }}</td>
+
+                <td>
+
+                    <a
+                        href="{{ submission.submission_file.url }}"
+                        target="_blank"
+                        class="btn btn-primary btn-sm">
+
+                        Download
+
+                    </a>
+
+                </td>
+                <td>
+
+                    <a
+                        href="{% url 'grade_submission' submission.id %}"
+                        class="btn btn-success btn-sm">
+                        Grade
+                    </a>
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    No submissions yet.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

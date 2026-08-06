@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Course
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow p-4">
+
+                <h2 class="text-center mb-4">
+                    Edit Course
+                </h2>
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button
+                        type="submit"
+                        class="btn btn-success w-100">
+
+                        Update Course
+
+                    </button>
+                    <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary w-100 mt-2">
+                    Cancel
+                    </a>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

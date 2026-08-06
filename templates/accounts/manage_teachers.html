@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Manage Teachers
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+
+        Manage Teachers
+
+    </h2>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for teacher in teachers %}
+
+            <tr>
+
+                <td>{{ teacher.user.get_full_name|default:teacher.user.username }}</td>
+
+                <td>{{ teacher.user.email }}</td>
+
+                <td>{{ teacher.phone }}</td>
+
+                <td>
+
+                    {% if teacher.user.is_active %}
+
+                        <span class="badge bg-success">
+
+                            Active
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-danger">
+
+                            Inactive
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="{% url 'toggle_teacher_status' teacher.user.id %}"
+                        class="btn btn-warning btn-sm">
+
+                        {% if teacher.user.is_active %}
+
+                            Deactivate
+
+                        {% else %}
+
+                            Activate
+
+                        {% endif %}
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="5" class="text-center">
+
+                    No teachers found.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
