@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-_2&ntzvi=0dak#6!6p+uglg4v#us)^80y=*lsz$j#6n@+l8fy5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'elearning-add2.onrender.com',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
